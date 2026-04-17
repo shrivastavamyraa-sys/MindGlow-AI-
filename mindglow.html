@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindGlow AI 🧠✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --yellow:#FFD93D; --yellow-d:#F5C400;
+  --purple:#A78BFA; --purple-d:#7C3AED; --soft-purple:#EDE9FE;
+  --pink:#FB7185; --soft-pink:#FFE4E6;
+  --green:#34D399; --soft-green:#D1FAE5;
+  --blue:#60A5FA; --soft-blue:#DBEAFE;
+  --orange:#FB923C; --soft-orange:#FFEDD5;
+  --teal:#2DD4BF; --soft-teal:#CCFBF1;
+  --dark:#1E1B4B; --mid:#4B5563; --light:#F9FAFB;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:#F5F3FF;color:var(--dark);min-height:100vh;}
+
+/* ── NAVBAR ── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(255,255,255,0.95);backdrop-filter:blur(14px);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:62px;
+  box-shadow:0 2px 20px rgba(124,58,237,0.10);
+  border-bottom:2px solid #EDE9FE;
+}
+.nav-logo {font-family:'Fredoka One',cursive;font-size:1.35rem;color:var(--purple-d);display:flex;align-items:center;gap:6px;}
+.nav-links {display:flex;gap:4px;}
+.nav-btn {
+  font-family:'Fredoka One',cursive;font-size:0.82rem;
+  padding:7px 14px;border-radius:50px;border:none;cursor:pointer;
+  background:transparent;color:var(--mid);transition:all 0.2s;
+}
+.nav-btn:hover,.nav-btn.active{background:var(--purple-d);color:white;}
+.nav-worry {
+  font-family:'Fredoka One',cursive;font-size:0.82rem;
+  padding:7px 16px;border-radius:50px;border:none;cursor:pointer;
+  background:var(--pink);color:white;transition:all 0.2s;
+}
+.nav-worry:hover{transform:scale(1.05);}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;padding-top:62px;}
+.page.active{display:block;}
+
+/* ── HERO ── */
+.hero {
+  background:linear-gradient(135deg,#7C3AED 0%,#A78BFA 40%,#FB7185 100%);
+  padding:60px 24px 80px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before {
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-emoji {font-size:5rem;display:block;animation:float 3s ease-in-out infinite;margin-bottom:16px;position:relative;}
+.hero h1 {font-family:'Fredoka One',cursive;font-size:3rem;color:white;margin-bottom:10px;position:relative;}
+.hero p  {font-size:1.15rem;color:rgba(255,255,255,0.9);max-width:420px;margin:0 auto 28px;position:relative;line-height:1.7;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  display:flex;justify-content:center;gap:0;
+  background:white;box-shadow:0 4px 20px rgba(0,0,0,0.07);
+  flex-wrap:wrap;
+}
+.stat {
+  flex:1;min-width:120px;padding:20px 16px;text-align:center;
+  border-right:1px solid #F3F4F6;
+}
+.stat:last-child{border-right:none;}
+.stat-num {font-family:'Fredoka One',cursive;font-size:1.7rem;color:var(--purple-d);}
+.stat-label{font-size:0.8rem;color:var(--mid);font-weight:700;margin-top:2px;}
+
+/* ── SECTION ── */
+.section{padding:48px 24px;max-width:700px;margin:0 auto;}
+.section-title{font-family:'Fredoka One',cursive;font-size:1.7rem;color:var(--dark);margin-bottom:6px;}
+.section-sub{font-size:0.97rem;color:var(--mid);margin-bottom:28px;}
+
+/* ── FEATURE CARDS ── */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:32px;}
+.feat-card {
+  background:white;border-radius:22px;padding:24px 16px;text-align:center;
+  box-shadow:0 4px 16px rgba(124,58,237,0.08);
+  cursor:pointer;transition:all 0.22s;border:2px solid transparent;
+}
+.feat-card:hover{transform:translateY(-5px);border-color:var(--purple);box-shadow:0 10px 30px rgba(124,58,237,0.18);}
+.feat-card .fc-icon{font-size:2.4rem;margin-bottom:10px;}
+.feat-card .fc-title{font-family:'Fredoka One',cursive;font-size:1.05rem;color:var(--dark);margin-bottom:4px;}
+.feat-card .fc-desc{font-size:0.78rem;color:var(--mid);}
+
+/* ── TIPS STRIP ── */
+.tips-strip{background:linear-gradient(90deg,#7C3AED,#FB7185);border-radius:20px;padding:24px;color:white;margin-bottom:32px;}
+.tips-strip h3{font-family:'Fredoka One',cursive;font-size:1.2rem;margin-bottom:14px;}
+.tips-row{display:flex;gap:10px;flex-wrap:wrap;}
+.tip-chip{background:rgba(255,255,255,0.22);border-radius:50px;padding:7px 14px;font-size:0.85rem;font-weight:700;}
+
+/* ── BUTTONS ── */
+.btn{display:inline-block;padding:13px 28px;border-radius:50px;font-family:'Fredoka One',cursive;font-size:1rem;border:none;cursor:pointer;transition:all 0.18s;text-decoration:none;}
+.btn:hover{transform:scale(1.06);box-shadow:0 6px 20px rgba(0,0,0,0.18);}
+.btn:active{transform:scale(0.97);}
+.btn-white {background:white;color:var(--purple-d);}
+.btn-outline{background:transparent;color:white;border:2px solid white;}
+.btn-main  {background:var(--yellow);color:var(--dark);}
+.btn-purple{background:var(--purple-d);color:white;}
+.btn-pink  {background:var(--pink);color:white;}
+.btn-green {background:var(--green);color:white;}
+.btn-back  {background:#F3F4F6;color:var(--dark);font-size:0.9rem;padding:9px 20px;}
+.btn-yes   {background:var(--green);color:white;padding:9px 16px;font-size:0.88rem;}
+.btn-no    {background:var(--pink);color:white;padding:9px 16px;font-size:0.88rem;}
+.btn-some  {background:var(--blue);color:white;padding:9px 16px;font-size:0.88rem;}
+
+/* ── CHECK-IN PAGE ── */
+.checkin-hero{background:linear-gradient(135deg,#1E1B4B,#7C3AED);padding:40px 24px;text-align:center;}
+.checkin-hero h1{font-family:'Fredoka One',cursive;font-size:2rem;color:white;margin-bottom:8px;}
+.checkin-hero p{color:rgba(255,255,255,0.85);font-size:1rem;}
+
+.progress-section{background:white;padding:18px 24px;border-bottom:1px solid #EDE9FE;position:sticky;top:62px;z-index:10;}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.progress-meta span{font-size:0.88rem;font-weight:700;color:var(--mid);}
+.progress-wrap{background:#EEE;border-radius:50px;height:10px;overflow:hidden;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--purple-d),var(--pink));border-radius:50px;transition:width 0.5s ease;width:0%;}
+
+.questions-wrap{max-width:680px;margin:0 auto;padding:24px;}
+.q-category{font-family:'Fredoka One',cursive;font-size:1rem;color:var(--purple-d);margin:24px 0 12px;display:flex;align-items:center;gap:8px;}
+.q-card {
+  background:white;border-radius:18px;padding:20px;margin-bottom:12px;
+  border:2px solid #EDE9FE;transition:all 0.25s;
+  box-shadow:0 2px 8px rgba(124,58,237,0.05);
+}
+.q-card.answered{background:#F0FDF4;border-color:var(--green);}
+.q-card-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.q-icon{font-size:1.6rem;flex-shrink:0;}
+.q-text{font-size:1rem;font-weight:700;color:var(--dark);line-height:1.45;}
+.q-btns{display:flex;gap:8px;flex-wrap:wrap;}
+
+.submit-wrap{text-align:center;padding:24px;background:white;border-top:1px solid #EDE9FE;}
+
+/* ── RESULTS PAGE ── */
+.results-hero{padding:40px 24px;text-align:center;}
+.result-badge {
+  display:inline-block;border-radius:20px;padding:22px 28px;
+  font-size:1.05rem;font-weight:800;margin:16px 0;width:100%;text-align:left;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+}
+.badge-ok    {background:var(--soft-green);border-left:6px solid var(--green);color:#065F46;}
+.badge-care  {background:var(--soft-orange);border-left:6px solid var(--orange);color:#92400E;}
+.badge-doctor{background:var(--soft-pink);border-left:6px solid var(--pink);color:#9F1239;}
+
+.sugg-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
+.sugg-card{background:white;border-radius:16px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,0.06);text-align:center;}
+.sugg-card .s-icon{font-size:1.8rem;margin-bottom:6px;}
+.sugg-card .s-text{font-size:0.88rem;font-weight:700;color:var(--dark);}
+
+.kindness-banner{
+  background:linear-gradient(135deg,#FFF6C3,#EDE9FE);
+  border-radius:20px;padding:22px;margin:16px 0;
+  border:2px dashed var(--purple);text-align:center;
+  font-size:1.05rem;font-weight:800;color:var(--dark);
+}
+.safety-box{background:#FFF1F2;border-radius:16px;padding:18px;margin:16px 0;border:1px solid #FECDD3;}
+.safety-box p{font-size:0.88rem;color:#9F1239;line-height:1.65;}
+
+/* ── LEARN PAGE ── */
+.learn-hero{background:linear-gradient(135deg,#0F172A,#1E40AF);padding:40px 24px;text-align:center;}
+.learn-hero h1{font-family:'Fredoka One',cursive;font-size:2rem;color:white;margin-bottom:8px;}
+.learn-hero p{color:rgba(255,255,255,0.8);font-size:1rem;}
+
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:24px;}
+.topic-card{
+  background:white;border-radius:20px;padding:22px 14px;text-align:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.07);cursor:pointer;transition:all 0.22s;
+  border:2px solid transparent;
+}
+.topic-card:hover{transform:translateY(-4px);border-color:var(--blue);}
+.topic-card .t-icon{font-size:2.2rem;margin-bottom:8px;}
+.topic-card .t-name{font-family:'Fredoka One',cursive;font-size:0.95rem;color:var(--dark);}
+
+.article-wrap{display:none;animation:fadeUp 0.4s ease both;}
+.article-wrap.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.article-wrap h2{font-family:'Fredoka One',cursive;font-size:1.6rem;color:var(--dark);margin-bottom:16px;}
+.article-wrap p{font-size:0.97rem;color:var(--mid);line-height:1.8;margin-bottom:14px;}
+.fact-box{background:var(--soft-blue);border-radius:14px;padding:14px;margin:12px 0;font-weight:700;font-size:0.93rem;color:var(--dark);}
+.did-you-know{background:linear-gradient(135deg,var(--soft-purple),var(--soft-pink));border-radius:14px;padding:14px;margin:12px 0;font-weight:700;font-size:0.93rem;color:var(--dark);}
+
+/* ── FEEL BETTER PAGE ── */
+.fb-hero{background:linear-gradient(135deg,#064E3B,#059669);padding:40px 24px;text-align:center;}
+.fb-hero h1{font-family:'Fredoka One',cursive;font-size:2rem;color:white;margin-bottom:8px;}
+.fb-hero p{color:rgba(255,255,255,0.85);}
+
+.calm-steps{display:flex;flex-direction:column;gap:12px;margin:20px 0;}
+.calm-step{
+  background:white;border-radius:18px;padding:18px 20px;
+  display:flex;align-items:center;gap:16px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.06);
+  border-left:5px solid var(--teal);
+}
+.calm-step .cs-icon{font-size:2rem;flex-shrink:0;}
+.calm-step .cs-text{font-size:0.97rem;font-weight:700;color:var(--dark);}
+.calm-step .cs-sub{font-size:0.82rem;color:var(--mid);margin-top:3px;}
+
+.affirmations{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0;}
+.affirm{
+  background:linear-gradient(135deg,var(--soft-purple),var(--soft-pink));
+  border-radius:16px;padding:16px;text-align:center;
+  font-family:'Fredoka One',cursive;font-size:0.9rem;color:var(--dark);
+}
+
+/* ── FOOTER ── */
+footer{background:var(--dark);color:rgba(255,255,255,0.7);text-align:center;padding:24px;font-size:0.82rem;}
+footer span{color:var(--yellow);}
+
+/* ── UTILS ── */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes popIn{from{opacity:0;transform:scale(0.88)}to{opacity:1;transform:scale(1)}}
+.pop{animation:popIn 0.45s cubic-bezier(.34,1.56,.64,1) both;}
+.card-wrap{max-width:680px;margin:0 auto;padding:0 24px 32px;}
+</style>
+</head>
+<body>
+
+<!-- ════ NAVBAR ════ -->
+<nav>
+  <div class="nav-logo">🧠 MindGlow AI</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="goTo('home')">🏠 Home</button>
+    <button class="nav-btn" onclick="goTo('checkin')">🧠 Check-In</button>
+    <button class="nav-btn" onclick="goTo('learn')">📚 Learn</button>
+    <button class="nav-btn" onclick="goTo('feelbetter')">💛 Feel Better</button>
+  </div>
+  <button class="nav-worry" onclick="goTo('feelbetter')">😟 I'm Worried</button>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HOME PAGE
+════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <span class="hero-emoji">🧠</span>
+    <h1>✨ MindGlow AI</h1>
+    <p>Your friendly health buddy — here to help you feel better, learn more, and never feel alone 💛</p>
+    <div class="hero-btns">
+      <button class="btn btn-white" onclick="goTo('checkin')">👉 Start My Check-In</button>
+      <button class="btn btn-outline" onclick="goTo('learn')">📚 Start Learning</button>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">10</div><div class="stat-label">📋 Check-In Questions</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">📚 Learn Topics</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">💛 Free & Safe</div></div>
+    <div class="stat"><div class="stat-num">✨</div><div class="stat-label">🤗 Always Kind</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">What can GlowBuddy do? 🌟</div>
+    <div class="section-sub">Tap anything to get started!</div>
+    <div class="feat-grid">
+      <div class="feat-card" onclick="goTo('checkin')">
+        <div class="fc-icon">🧠</div>
+        <div class="fc-title">Smart Check-In</div>
+        <div class="fc-desc">Answer questions & get helpful results</div>
+      </div>
+      <div class="feat-card" onclick="goTo('learn')">
+        <div class="fc-icon">📚</div>
+        <div class="fc-title">Learn</div>
+        <div class="fc-desc">Easy facts about health topics</div>
+      </div>
+      <div class="feat-card" onclick="goTo('feelbetter')">
+        <div class="fc-icon">💛</div>
+        <div class="fc-title">Feel Better</div>
+        <div class="fc-desc">Calming steps when you're upset</div>
+      </div>
+      <div class="feat-card" onclick="goTo('feelbetter')">
+        <div class="fc-icon">😟</div>
+        <div class="fc-title">I'm Worried</div>
+        <div class="fc-desc">You're not alone — we're here!</div>
+      </div>
+      <div class="feat-card" onclick="goTo('checkin')">
+        <div class="fc-icon">💧</div>
+        <div class="fc-title">Hydration Check</div>
+        <div class="fc-desc">Are you drinking enough water?</div>
+      </div>
+      <div class="feat-card" onclick="goTo('checkin')">
+        <div class="fc-icon">😴</div>
+        <div class="fc-title">Sleep Check</div>
+        <div class="fc-desc">How's your sleep been lately?</div>
+      </div>
+    </div>
+
+    <div class="tips-strip">
+      <h3>💡 Quick Health Tips!</h3>
+      <div class="tips-row">
+        <div class="tip-chip">💧 Drink 6–8 glasses of water</div>
+        <div class="tip-chip">😴 Sleep 9–11 hours</div>
+        <div class="tip-chip">🌳 Go outside daily</div>
+        <div class="tip-chip">🥗 Eat your veggies</div>
+        <div class="tip-chip">🧘 Take deep breaths</div>
+        <div class="tip-chip">🤗 Talk to someone you trust</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>Made with 💛 by Myra &nbsp;|&nbsp; <span>This is not medical advice.</span> Always talk to a doctor if you feel unwell.</footer>
+</div>
+
+<!-- ════════════════════════════════════════
+     CHECK-IN PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-checkin">
+  <div class="checkin-hero">
+    <h1>🧠 Smart Check-In</h1>
+    <p>Answer honestly — there are no wrong answers! GlowBuddy is here for you 💛</p>
+  </div>
+
+  <div class="progress-section">
+    <div class="progress-meta">
+      <span id="progress-label">0 of 10 answered</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+  </div>
+
+  <div class="questions-wrap">
+
+    <div class="q-category">😴 Sleep & Energy</div>
+
+    <div class="q-card" id="q0">
+      <div class="q-card-top"><div class="q-icon">😴</div><div class="q-text">Do you sleep well at night?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(0,'yes','good')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(0,'no','bad')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(0,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q1">
+      <div class="q-card-top"><div class="q-icon">🥱</div><div class="q-text">Do you feel tired or sleepy during the day?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(1,'yes','bad')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(1,'no','good')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(1,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-category">💧 Body & Health</div>
+
+    <div class="q-card" id="q2">
+      <div class="q-card-top"><div class="q-icon">💧</div><div class="q-text">Do you drink enough water every day?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(2,'yes','good')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(2,'no','bad')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(2,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q3">
+      <div class="q-card-top"><div class="q-icon">🤕</div><div class="q-text">Do you get headaches often?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(3,'yes','bad')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(3,'no','good')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(3,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q4">
+      <div class="q-card-top"><div class="q-icon">😵</div><div class="q-text">Do you feel dizzy sometimes?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(4,'yes','bad')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(4,'no','good')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(4,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q5">
+      <div class="q-card-top"><div class="q-icon">🍎</div><div class="q-text">Do you eat healthy food most days?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(5,'yes','good')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(5,'no','bad')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(5,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-category">😊 Feelings & Mind</div>
+
+    <div class="q-card" id="q6">
+      <div class="q-card-top"><div class="q-icon">😟</div><div class="q-text">Do you feel worried or stressed a lot?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(6,'yes','bad')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(6,'no','good')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(6,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q7">
+      <div class="q-card-top"><div class="q-icon">😢</div><div class="q-text">Do you feel sad or low on energy?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(7,'yes','bad')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(7,'no','good')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(7,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-category">🏃 Activity & Social</div>
+
+    <div class="q-card" id="q8">
+      <div class="q-card-top"><div class="q-icon">🏃</div><div class="q-text">Do you get some exercise or play outside most days?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(8,'yes','good')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(8,'no','bad')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(8,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="q9">
+      <div class="q-card-top"><div class="q-icon">🤗</div><div class="q-text">Do you have someone you can talk to when you feel bad?</div></div>
+      <div class="q-btns">
+        <button class="btn btn-yes" onclick="answer(9,'yes','good')">✅ Yes</button>
+        <button class="btn btn-no"  onclick="answer(9,'no','bad')">❌ No</button>
+        <button class="btn btn-some" onclick="answer(9,'sometimes','mid')">🤔 Sometimes</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="submit-wrap">
+    <button class="btn btn-purple" onclick="showResults()" style="font-size:1.1rem;padding:15px 40px;">✨ See My Results</button>
+    <br><br>
+    <button class="btn btn-back" onclick="goTo('home')">← Back to Home</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     RESULTS PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-results">
+  <div class="results-hero" style="background:linear-gradient(135deg,#7C3AED,#FB7185);padding:40px 24px;text-align:center;">
+    <div style="font-size:3.5rem;margin-bottom:10px;">💛</div>
+    <h1 style="font-family:'Fredoka One',cursive;font-size:2rem;color:white;">Thanks for sharing with me!</h1>
+    <p style="color:rgba(255,255,255,0.9);margin-top:8px;">Here's what GlowBuddy found for you 🌟</p>
+  </div>
+
+  <div class="card-wrap pop">
+    <div id="result-badge" style="margin-top:24px;"></div>
+
+    <div class="section-title" style="margin-top:24px;">🌟 My Suggestions For You</div>
+    <div class="sugg-grid" id="sugg-grid"></div>
+
+    <div class="kindness-banner" id="kindness-banner"></div>
+
+    <div class="safety-box">
+      <p>⚕️ <strong>This is not medical advice.</strong> MindGlow AI is here to support you, but it is NOT a doctor. Please talk to a parent, teacher, or real doctor if you don't feel well. You deserve the best care! 💛</p>
+    </div>
+
+    <div style="text-align:center;margin-top:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn btn-pink" onclick="goTo('feelbetter')">😟 I'm Still Worried</button>
+      <button class="btn btn-purple" onclick="goTo('learn')">📚 Learn More</button>
+      <button class="btn btn-back" onclick="resetCheck()">🔄 Start Over</button>
+    </div>
+  </div>
+  <footer style="background:var(--dark);color:rgba(255,255,255,0.7);text-align:center;padding:24px;font-size:0.82rem;margin-top:32px;">Made with 💛 by Myra &nbsp;|&nbsp; <span style="color:var(--yellow)">This is not medical advice.</span></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+     LEARN PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-learn">
+  <div class="learn-hero">
+    <h1>📚 Learn With GlowBuddy</h1>
+    <p>Super easy health facts — written just for you! 🌟</p>
+  </div>
+
+  <div class="section">
+    <div id="learn-home-section">
+      <div class="section-title">Pick a topic! 👇</div>
+      <div class="section-sub">Tap any card to start reading</div>
+      <div class="topic-grid">
+        <div class="topic-card" onclick="showArticle('cancer')"><div class="t-icon">🎗️</div><div class="t-name">Cancer</div></div>
+        <div class="topic-card" onclick="showArticle('brain')"><div class="t-icon">🧠</div><div class="t-name">Brain Tumors</div></div>
+        <div class="topic-card" onclick="showArticle('headaches')"><div class="t-icon">🤕</div><div class="t-name">Headaches</div></div>
+        <div class="topic-card" onclick="showArticle('sleep')"><div class="t-icon">🌙</div><div class="t-name">Sleep</div></div>
+        <div class="topic-card" onclick="showArticle('water')"><div class="t-icon">💧</div><div class="t-name">Hydration</div></div>
+        <div class="topic-card" onclick="showArticle('stress')"><div class="t-icon">😟</div><div class="t-name">Stress</div></div>
+      </div>
+    </div>
+
+    <div class="article-wrap" id="article-cancer">
+      <h2>🎗️ What is Cancer?</h2>
+      <p>Our bodies are made of billions of tiny things called <strong>cells</strong>. Normally, cells grow, do their job, and then stop. But sometimes, some cells go a little wrong and start growing way too fast — like they forgot to stop! That's what we call <strong>cancer</strong>.</p>
+      <div class="fact-box">🔬 There are more than 100 different types of cancer. Doctors have special names for each one!</div>
+      <p>Cancer can happen in almost any part of the body — like the skin, blood, lungs, or brain. Doctors use special tests like X-rays and blood tests to find it.</p>
+      <div class="did-you-know">💡 Did you know? Many people get better from cancer when it's found early and treated by doctors!</div>
+      <p>Treatments can include medicines, special beams of light, or surgery. It can be tough, but many kids and adults beat cancer and go on to live full, happy lives! 💪</p>
+      <div class="safety-box"><p>⚕️ If you notice something unusual about your body, always tell a grown-up. Catching things early makes a big difference!</p></div>
+      <button class="btn btn-back" onclick="showArticle('home')" style="margin-top:16px;">← All Topics</button>
+    </div>
+
+    <div class="article-wrap" id="article-brain">
+      <h2>🧠 What is a Brain Tumor?</h2>
+      <p>Your brain is the most amazing control center in the whole world — it controls everything you do, think, and feel! A <strong>brain tumor</strong> is when extra cells grow inside the brain and start taking up space where they shouldn't be.</p>
+      <div class="fact-box">🔍 Doctors can find brain tumors using special cameras called MRI and CT scans — they take pictures of the inside of your head!</div>
+      <p>Not all brain tumors are the same. Some grow slowly and might not need treatment right away. Others need surgery or special medicines. Doctors decide the best plan for each person.</p>
+      <div class="did-you-know">💡 Signs to tell a grown-up about: very bad headaches that don't go away, blurry vision, or feeling dizzy a lot.</div>
+      <p>The most important thing is to tell a trusted adult if something doesn't feel right. Doctors are really good at helping! 💛</p>
+      <button class="btn btn-back" onclick="showArticle('home')" style="margin-top:16px;">← All Topics</button>
+    </div>
+
+    <div class="article-wrap" id="article-headaches">
+      <h2>🤕 Why Do We Get Headaches?</h2>
+      <p>Headaches are super common — almost everyone gets one sometimes! A headache is when your head feels sore, tight, or painful. There are lots of reasons this happens.</p>
+      <div class="fact-box">💧 The #1 most common reason for headaches in kids is not drinking enough water!</div>
+      <p>Other reasons include: being too tired, skipping meals, staring at a screen too long, being stressed, or even being in a loud, bright place. Most headaches go away with a little rest and water. 🌊</p>
+      <div class="did-you-know">💡 The 20-20-20 rule: Every 20 minutes, look at something 20 feet away for 20 seconds to rest your eyes!</div>
+      <p>If you get really bad headaches very often, or they feel different from usual, make sure to tell a grown-up so a doctor can check. 💛</p>
+      <button class="btn btn-back" onclick="showArticle('home')" style="margin-top:16px;">← All Topics</button>
+    </div>
+
+    <div class="article-wrap" id="article-sleep">
+      <h2>🌙 Why Is Sleep a Superpower?</h2>
+      <p>When you're asleep, it might feel like nothing is happening — but actually, your brain and body are working super hard! Sleep is when your brain stores memories from the day, your muscles heal and grow, and your body gets ready for tomorrow.</p>
+      <div class="fact-box">😴 Kids aged 6–12 need 9 to 11 hours of sleep every single night!</div>
+      <p>Not sleeping enough can make you feel grumpy, make it harder to learn, give you headaches, and even make you feel more worried or sad. Sleep is like charging your body battery! 🔋</p>
+      <div class="did-you-know">💡 Try going to bed at the same time every night — your body loves a routine!</div>
+      <p>Tips for better sleep: put screens away 30 minutes before bed, keep your room cool and dark, and try reading a book or taking deep breaths to calm down. 💛</p>
+      <button class="btn btn-back" onclick="showArticle('home')" style="margin-top:16px;">← All Topics</button>
+    </div>
+
+    <div class="article-wrap" id="article-water">
+      <h2>💧 Why Does Water Matter So Much?</h2>
+      <p>Did you know your body is about 60% water? That means water is literally what you're mostly made of! Every single part of your body — your brain, blood, muscles, and skin — needs water to work properly.</p>
+      <div class="fact-box">🧠 Even being a little bit dehydrated can make it harder to think and concentrate in school!</div>
+      <p>When you don't drink enough water, you might get headaches, feel tired, feel dizzy, or have trouble focusing. It's one of the easiest health problems to fix — just drink more water!</p>
+      <div class="did-you-know">💡 A good goal: drink 6 to 8 glasses of water every day. More if you've been running around!</div>
+      <p>Tip: Carry a water bottle with you everywhere. If your pee is dark yellow, it means you need more water! 💧</p>
+      <button class="btn btn-back" onclick="showArticle('home')" style="margin-top:16px;">← All Topics</button>
+    </div>
+
+    <div class="article-wrap" id="article-stress">
+      <h2>😟 What is Stress and Worry?</h2>
+      <p>Stress is what you feel when something seems hard, scary, or too much to handle. Everyone gets stressed sometimes — even grown-ups! It's a normal feeling, but it's important to know how to deal with it.</p>
+      <div class="fact-box">🫀 When you feel stressed, your heart beats faster and your body gets ready to react — it's called the "fight or flight" response!</div>
+      <p>Signs of too much stress: headaches, tummy aches, trouble sleeping, feeling sad or angry, or not wanting to do things you normally like. Sound familiar? That's okay — you can feel better!</p>
+      <div class="did-you-know">💡 Taking 5 slow, deep breaths actually calms down your brain and helps you feel less stressed — it works every time!</div>
+      <p>The most important thing is to talk to someone you trust — a parent, teacher, or school counselor. You don't have to carry big feelings alone. 💛</p>
+      <button class="btn btn-back" onclick="showArticle('home')" style="margin-top:16px;">← All Topics</button>
+    </div>
+  </div>
+
+  <footer style="background:var(--dark);color:rgba(255,255,255,0.7);text-align:center;padding:24px;font-size:0.82rem;">Made with 💛 by Myra &nbsp;|&nbsp; <span style="color:var(--yellow)">This is not medical advice.</span></footer>
+</div>
+
+<!-- ════════════════════════════════════════
+     FEEL BETTER PAGE
+════════════════════════════════════════ -->
+<div class="page" id="page-feelbetter">
+  <div class="fb-hero">
+    <div style="font-size:3.5rem;margin-bottom:10px;animation:float 3s ease-in-out infinite;display:block;">🌈</div>
+    <h1>You Are Not Alone 💛</h1>
+    <p>It's okay to feel worried, scared, or sad. GlowBuddy is here for you right now.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🌬️ Calm Down Steps</div>
+    <div class="section-sub">Try these one by one — they really work!</div>
+    <div class="calm-steps">
+      <div class="calm-step"><div class="cs-icon">🌬️</div><div><div class="cs-text">Take a slow deep breath</div><div class="cs-sub">Breathe in for 4 seconds, hold for 2, out for 6</div></div></div>
+      <div class="calm-step"><div class="cs-icon">👀</div><div><div class="cs-text">Look around you</div><div class="cs-sub">Name 5 things you can see right now</div></div></div>
+      <div class="calm-step"><div class="cs-icon">💧</div><div><div class="cs-text">Drink some water</div><div class="cs-sub">Cold water helps calm your nervous system</div></div></div>
+      <div class="calm-step"><div class="cs-icon">🤗</div><div><div class="cs-text">Talk to someone you trust</div><div class="cs-sub">A parent, teacher, or friend — you don't have to be alone</div></div></div>
+      <div class="calm-step"><div class="cs-icon">🎨</div><div><div class="cs-text">Draw or write your feelings</div><div class="cs-sub">Getting feelings out on paper really helps!</div></div></div>
+      <div class="calm-step"><div class="cs-icon">🛌</div><div><div class="cs-text">Rest and be kind to yourself</div><div class="cs-sub">You don't have to be okay all the time</div></div></div>
+    </div>
+
+    <div class="section-title" style="margin-top:32px;">💛 Reminders For You</div>
+    <div class="affirmations">
+      <div class="affirm">💛 You are doing your best!</div>
+      <div class="affirm">🌟 You are loved!</div>
+      <div class="affirm">💪 You are braver than you think!</div>
+      <div class="affirm">🌈 This feeling will pass!</div>
+      <div class="affirm">🤗 You matter so much!</div>
+      <div class="affirm">✨ You are not alone!</div>
+    </div>
+
+    <div class="safety-box" style="margin-top:24px;">
+      <p>⚕️ If you feel very sad, scared, or unsafe — please tell a grown-up straight away. A parent, teacher, school nurse, or doctor can help you. <strong>You deserve support! 💛</strong></p>
+    </div>
+
+    <div style="text-align:center;margin-top:24px;">
+      <button class="btn btn-purple" onclick="goTo('checkin')">🧠 Do a Check-In</button>
+      <button class="btn btn-back" onclick="goTo('home')" style="margin-left:8px;">🏠 Home</button>
+    </div>
+  </div>
+
+  <footer style="background:var(--dark);color:rgba(255,255,255,0.7);text-align:center;padding:24px;font-size:0.82rem;">Made with 💛 by Myra &nbsp;|&nbsp; <span style="color:var(--yellow)">This is not medical advice.</span></footer>
+</div>
+
+<script>
+const answers = {};
+const TOTAL = 10;
+
+function goTo(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const navPages = ['home','checkin','learn','feelbetter'];
+  document.querySelectorAll('.nav-btn').forEach((b,i) => b.classList.toggle('active', navPages[i] === name));
+  window.scrollTo(0,0);
+}
+
+function answer(q, val, type) {
+  answers[q] = { val, type };
+  document.getElementById('q'+q).classList.add('answered');
+  const count = Object.keys(answers).length;
+  document.getElementById('progress').style.width = (count / TOTAL * 100) + '%';
+  document.getElementById('progress-label').textContent = count + ' of ' + TOTAL + ' answered';
+  document.getElementById('progress-pct').textContent = Math.round(count/TOTAL*100) + '%';
+}
+
+function showResults() {
+  let badScore = 0;
+  Object.values(answers).forEach(a => {
+    if (a.type === 'bad') badScore += (a.val === 'yes' ? 2 : 1);
+    if (a.type === 'good' && a.val === 'no') badScore += 2;
+    if (a.type === 'good' && a.val === 'sometimes') badScore += 1;
+  });
+
+  const badge = document.getElementById('result-badge');
+  if (badScore <= 4) {
+    badge.innerHTML = `<div class="result-badge badge-ok">✅ You're doing pretty well!<br><br>Keep up the good habits — sleep well, drink water, and stay active. You're doing great! 👍</div>`;
+  } else if (badScore <= 10) {
+    badge.innerHTML = `<div class="result-badge badge-care">💧 You could use a little more self-care!<br><br>Try drinking more water, getting more sleep, and spending some time outside. Small changes can make you feel much better!</div>`;
+  } else {
+    badge.innerHTML = `<div class="result-badge badge-doctor">💛 It sounds like you might need some extra support.<br><br>Please talk to a parent, teacher, or doctor soon. You deserve to feel good, and there are people who want to help you! 🤗</div>`;
+  }
+
+  const suggestions = [
+    {icon:'💧', text:'Drink more water today'},
+    {icon:'😴', text:'Get 9–11 hours of sleep'},
+    {icon:'🌳', text:'Spend time outside'},
+    {icon:'🥗', text:'Eat something healthy'},
+    {icon:'🤗', text:'Talk to someone you trust'},
+    {icon:'🧘', text:'Try deep breathing'},
+    {icon:'📵', text:'Take a screen break'},
+    {icon:'😊', text:'Do something fun you love'},
+  ];
+  document.getElementById('sugg-grid').innerHTML = suggestions
+    .map(s => `<div class="sugg-card"><div class="s-icon">${s.icon}</div><div class="s-text">${s.text}</div></div>`)
+    .join('');
+
+  const kind = [
+    "💛 You're doing your best — and that is always enough!",
+    "🌟 Taking care of yourself is the coolest thing you can do!",
+    "💪 Being brave enough to check in with yourself? That's amazing!",
+    "🌈 Every small step toward feeling better really counts!",
+    "✨ You showed up for yourself today. That matters so much! 💛"
+  ];
+  document.getElementById('kindness-banner').innerHTML = kind[Math.floor(Math.random()*kind.length)];
+
+  goTo('results');
+}
+
+function resetCheck() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered'));
+  document.getElementById('progress').style.width = '0%';
+  document.getElementById('progress-label').textContent = '0 of 10 answered';
+  document.getElementById('progress-pct').textContent = '0%';
+  goTo('checkin');
+}
+
+function showArticle(name) {
+  document.querySelectorAll('.article-wrap').forEach(a => a.classList.remove('active'));
+  document.getElementById('learn-home-section').style.display = name === 'home' ? '' : 'none';
+  if (name !== 'home') document.getElementById('article-' + name).classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
